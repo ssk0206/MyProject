@@ -5,11 +5,27 @@ import VueRouter from 'vue-router'
 import PhotoList from './pages/PhotoList.vue'
 import Login from './pages/Login.vue'
 
+import store from './store'
+
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/',      component: PhotoList },
-    { path: '/login', component: Login }
+    {
+        path: '/',
+        component: PhotoList
+    },
+    {
+        path: '/login',
+        component: Login,
+        beforeEnter (to, from, next) {
+            if (store.getters['auth/check']) {
+                next('/')
+            } else {
+                //そのままページコンポーネントが切り替わる
+                next()
+            }
+        }
+    }
 ]
 
 const router = new VueRouter({
