@@ -25,6 +25,17 @@
         <!-- Register Form -->
         <div class="panel" v-show="tab === 2">
             <form class="form" v-on:submit.prevent="register">
+                <div v-if="registerErrors" class="errors">
+                    <ul v-if="registerErrors.name">
+                        <li v-for="msg in registerErrors.name" :key="msg">{{ msg }}</li>
+                    </ul>
+                    <ul v-if="registerErrors.email">
+                        <li v-for="msg in registerErrors.email" :key="msg">{{ msg }}</li>
+                    </ul>
+                    <ul v-if="registerErrors.password">
+                        <li v-for="msg in registerErrors.password" :key="msg">{{ msg }}</li>
+                    </ul>
+                </div>
                 <label for="username">Name</label>
                 <input type="text" class="form__item" id="name" v-model="registerForm.name">
                 <label for="email">Email</label>
@@ -42,6 +53,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     data () {
         return {
@@ -58,14 +70,29 @@ export default {
             }
         }
     },
+    // computed: {
+    //     apiStatus () {
+    //         return this.$store.state.auth.apiStatus
+    //     },
+    //     loginErrors () {
+    //         return this.$store.state.auth.loginErrorMessages
+    //     }
+    // },
+    computed: mapState({
+        apiStatus: state => state.auth.apiStatus,
+        loginErrors: state => state.auth.loginErrorMessages,
+        registerErrors: state => state.auth.registerErrorMessages
+    }),
     methods: {
         async login() {
             // authストアのloginアクションを呼び出す
             // 第一引数はアクションの名前(auth.jsのlogin)
             await this.$store.dispatch('auth/login', this.loginForm)
 
-            // トップページに移動する
-            this.$router.push('/')
+            if (this.apiStatus) {
+                // トップページに移動する
+                this.$router.push('/')
+            }            
         },
         async register () {
             // authストアのresigterアクションを呼び出す
@@ -73,7 +100,14 @@ export default {
 
             // トップページに移動する
             this.$router.push('/')
-        }
+        },
+        clearError () {
+            this.$store.commit('auth/setLoginErrorMessages', null)
+            this.$store.commit('auth/setRegisterErrorMessages', null)
+        },
+        created() {
+            this.clearError()
+        },
     }
 }
 </script>
