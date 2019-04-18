@@ -5,9 +5,10 @@
         </router-link>
         <div class="navbar__menu">
             <div v-if="isLogin" class="navbar__item">
-                <button class="button">
-                    <i class="icon icon-md-add"></i>
+                <button class="button" v-on:click="showForm = !showForm">
+                    <i class="icon ion-md-add"></i>
                     Submit a photo
+                    <PhotoForm v-model="showForm" />
                 </button>
             </div>
             <span v-if="isLogin" class="navbar__item">
@@ -23,14 +24,23 @@
 </template>
 
 <script>
+import PhotoForm from './PhotoForm.vue'
 export default {
-  computed: {
-    isLogin () {
-      return this.$store.getters['auth/check']
+    components: {
+        PhotoForm
     },
-    username () {
-      return this.$store.getters['auth/username']
+    data () {
+        return {
+            showForm: false
+        }
+    },
+    computed: {
+        isLogin () {
+            return this.$store.getters['auth/check']
+        },
+        username () {
+            return this.$store.getters['auth/username']
+        }
     }
-  }
 }
 </script>
