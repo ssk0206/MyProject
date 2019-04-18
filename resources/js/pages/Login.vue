@@ -13,6 +13,14 @@
         <!-- Login Form -->
         <div class="panel" v-show="tab === 1">
             <form class="form" v-on:submit.prevent="login">
+                <div v-if="loginErrors" class="errors">
+                    <ul v-if="loginErrors.email">
+                        <li v-for="msg in loginErrors.email" :key="msg">{{ msg }}</li>
+                    </ul>
+                    <ul v-if="loginErrors.password">
+                        <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
+                    </ul>
+                </div>
                 <label for="login-email">Email</label>
                 <input type="text" class="form__item" id="login-email" v-model="loginForm.email">
                 <label for="login-password">Password</label>
@@ -88,7 +96,7 @@ export default {
             // authストアのloginアクションを呼び出す
             // 第一引数はアクションの名前(auth.jsのlogin)
             await this.$store.dispatch('auth/login', this.loginForm)
-
+            
             if (this.apiStatus) {
                 // トップページに移動する
                 this.$router.push('/')
@@ -98,8 +106,11 @@ export default {
             // authストアのresigterアクションを呼び出す
             await this.$store.dispatch('auth/register', this.registerForm)
 
-            // トップページに移動する
-            this.$router.push('/')
+            if (this.apiStatus) {
+                // トップページに移動する
+                this.$router.push('/')
+            }
+            
         },
         clearError () {
             this.$store.commit('auth/setLoginErrorMessages', null)

@@ -2018,6 +2018,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2098,8 +2106,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return this.$store.dispatch('auth/register', this.registerForm);
 
               case 2:
-                // トップページに移動する
-                this.$router.push('/');
+                if (this.apiStatus) {
+                  // トップページに移動する
+                  this.$router.push('/');
+                }
 
               case 3:
               case "end":
@@ -3582,6 +3592,30 @@ var render = function() {
             }
           },
           [
+            _vm.loginErrors
+              ? _c("div", { staticClass: "errors" }, [
+                  _vm.loginErrors.email
+                    ? _c(
+                        "ul",
+                        _vm._l(_vm.loginErrors.email, function(msg) {
+                          return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loginErrors.password
+                    ? _c(
+                        "ul",
+                        _vm._l(_vm.loginErrors.password, function(msg) {
+                          return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("label", { attrs: { for: "login-email" } }, [_vm._v("Email")]),
             _vm._v(" "),
             _c("input", {
@@ -20294,18 +20328,15 @@ var state = {
   user: null,
   apiStatus: null,
   loginErrorMessages: null,
-  registerErrorMessages: null //ステートを元に演算した結果が欲しい場合
-
+  registerErrorMessages: null
 };
 var getters = {
-  //二重否定で確実にbooleanを返すようにしている
   check: function check(state) {
     return !!state.user;
   },
   username: function username(state) {
     return state.user ? state.user.name : '';
-  } //userステートの値を更新するsetUser
-
+  }
 };
 var mutations = {
   setUser: function setUser(state, user) {
@@ -20339,7 +20370,7 @@ var actions = {
             case 3:
               response = _context.sent;
 
-              if (!(response.status === CREATED)) {
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
                 _context.next = 8;
                 break;
               }
