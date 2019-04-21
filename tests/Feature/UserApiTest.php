@@ -6,11 +6,12 @@ use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Log;
 
 class UserApiTest extends TestCase
 {
     use RefreshDatabase;
-
+    
     public function setUp(): void
     {
         parent::setUp();

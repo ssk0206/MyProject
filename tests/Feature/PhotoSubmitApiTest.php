@@ -21,6 +21,7 @@ class PhotoSubmitApiTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
+        
     }
 
     /**
