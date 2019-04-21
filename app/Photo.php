@@ -9,6 +9,7 @@ class Photo extends Model
 {
     /** プライマリキーの型 */
     protected $keyType = 'string';
+    protected $perPage = 9;
 
     /** IDの桁数 */
     const ID_LENGTH = 12;
