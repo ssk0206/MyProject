@@ -64,6 +64,8 @@ export default {
       reader.readAsDataURL(event.target.files[0])
 
       this.photo = event.target.files[0]
+
+      //this.$parent.showForm = true;
     },
     reset () {
       this.preview = ''
@@ -97,7 +99,9 @@ export default {
         timeout: 6000
       })
 
+      console.log(response.data)
       this.$router.push(`/photos/${response.data.id}`)
+      //this.$router.push(`/photos/`)
     }
   }
 }

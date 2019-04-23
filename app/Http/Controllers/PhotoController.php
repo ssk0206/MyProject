@@ -55,7 +55,7 @@ class PhotoController extends Controller
         $extension = $request->photo->extension();
 
         $photo = new Photo();
-
+        Log::info($photo);
         // インスタンス生成時に割り振られたランダムなID値と
         // 本来の拡張子を組み合わせてファイル名とする
         $photo->filename = $photo->id . '.' . $extension;
@@ -71,12 +71,19 @@ class PhotoController extends Controller
         try {
             Auth::user()->photos()->save($photo);
             DB::commit();
+
+            Log::info('commit');
         } catch (\Exception $exception) {
             DB::rollBack();
             // DBとの不整合を避けるためアップロードしたファイルを削除
             Storage::cloud()->delete($photo->filename);
             throw $exception;
         }
+
+        // Log::info($photo);
+        Log::info($photo->id);
+        // Log::info('$photo->user_id');
+        // Log::info($photo->filename);
 
         // リソースの新規作成なので
         // レスポンスコードは201(CREATED)を返却する

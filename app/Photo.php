@@ -12,6 +12,14 @@ class Photo extends Model
     protected $keyType = 'string';
     protected $perPage = 9;
 
+    
+     /**
+     * モデルの主キーを自動増分させるか否か
+     *
+     * @var boolean
+     */
+    public $incrementing = false; 
+
     /** IDの桁数 */
     const ID_LENGTH = 12;
 
@@ -102,7 +110,8 @@ class Photo extends Model
      */
     public function getUrlAttribute()
     {
-        return Storage::cloud()->url($this->attributes['filename']);
+        \Log::info($this->filename);
+        return Storage::cloud()->url($this->filename);
     }
 
     /**
