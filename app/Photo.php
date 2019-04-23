@@ -12,7 +12,7 @@ class Photo extends Model
     protected $keyType = 'string';
     protected $perPage = 9;
 
-    
+
      /**
      * モデルの主キーを自動増分させるか否か
      *
@@ -110,7 +110,7 @@ class Photo extends Model
      */
     public function getUrlAttribute()
     {
-        \Log::info($this->filename);
+        // \Log::info($this->filename);
         return Storage::cloud()->url($this->filename);
     }
 
