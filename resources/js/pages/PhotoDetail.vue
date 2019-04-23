@@ -33,7 +33,7 @@
             <ul v-if="photo.comments.length > 0" class="photo-detail__comments">
                 <li
                     v-for="comment in photo.comments"
-                    :key="comment.content"
+                    :key="comment.id"
                     class="photo-detail__commentItem"
                 >
                     <p class="photo-detail__commentBody">

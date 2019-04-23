@@ -5295,7 +5295,7 @@ var render = function() {
                     return _c(
                       "li",
                       {
-                        key: comment.content,
+                        key: comment.id,
                         staticClass: "photo-detail__commentItem"
                       },
                       [
