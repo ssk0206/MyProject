@@ -33,7 +33,12 @@ export default {
     methods: {
         async fetchPhotos () {
             //${this.page}と書いてあったが、できなかったので仕方なく
-            const response = await axios.get(`https://sskvuesplash.herokuapp.com/api/photos/?page=${this.$route.query.page}`)          
+            const response = await axios.get(`/api/photos/`, 
+                            {
+                                params: {
+                                    page: this.$route.query.page
+                                }
+                            })          
             //console.log(this.router)
             //console.log(`/api/photos/?page=${this.page}`)
             //console.log(response)
