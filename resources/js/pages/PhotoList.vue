@@ -33,15 +33,14 @@ export default {
     methods: {
         async fetchPhotos () {
             //${this.page}と書いてあったが、できなかったので仕方なく
+            //クエリパラメータを指定しないとMixed Contentエラーになる
             const response = await axios.get(`https://sskvuesplash.herokuapp.com/api/photos`, 
                             {
                                 params: {
                                     page: this.$route.query.page
                                 }
                             })          
-            //console.log(this.router)
-            //console.log(`/api/photos/?page=${this.page}`)
-            //console.log(response)
+            
             if (response.status !== OK) {
                 this.$store.commit('error/setCode', response.status)
                 return false
@@ -99,7 +98,7 @@ export default {
     watch: {
         $route: {
             async handler () {
-                //console.log(this.$route)
+                
                 await this.fetchPhotos()
             },
             immediate: true
